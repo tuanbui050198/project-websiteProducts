@@ -251,3 +251,10 @@
 .img-slick-breadcrumb .breadcrumb img {
   width: 70%;
 }
+.text-title .text-title-login {
+  font-size: 14px;
+  color: red;
+}
+.link-register .mt-10 {
+  margin-top: 10px;
+}

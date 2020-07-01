@@ -95,9 +95,14 @@ function* addToCartSaga({ payload }) {
   if (index !== -1) {
     var temp2 = parseInt(quantity) + parseInt(dataCart[index].quantity);
     temp2= temp2.toString();
-    dataCart[index].quantity = temp2;
+    dataCart[index].quantity = temp2; 
     const respDataCart = yield call(updateCart, dataCart[index], dataCart[index].id);
-    yield put(updateQuantitySuccess(respDataCart.data, dataCart[index].quantity));
+    console.log(respDataCart.status);
+    if(respDataCart.status === STATUS_CODE.SUCCESS) {
+      yield put(updateQuantitySuccess(respDataCart.data, dataCart[index].quantity));
+    } else {
+      yield put(updateQuantityFailed(respDataCart.data));
+    }
   } else {
     const resp = yield call(addCart, {
       id,

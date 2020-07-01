@@ -36,9 +36,9 @@ class CartResult extends Component {
   showTotalAmount = (cart) => {
     var total = 0;
     if (cart.length > 0) {
-      for (var i = 0; i < cart.length; i++) {
-        total += cart[i].price * cart[i].quantity;
-      }
+      cart.map((index) => {
+        total += index.price * index.quantity;
+      })
     }
     return total;
   };

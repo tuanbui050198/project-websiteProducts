@@ -4,7 +4,7 @@ import ListItem from "@material-ui/core/ListItem";
 import PropTypes from 'prop-types';
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import { ROUTES_PRODUCT } from "../../../constants/index";
+import { ROUTES_PRODUCT } from "../../../constants/Routes";
 import styles from "./styles";
 
 class MenuSidebar extends Component {
