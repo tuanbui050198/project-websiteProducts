@@ -12,6 +12,7 @@ import {ROUTES_PRODUCT, ROUTES_LOGIN} from '../../constants/Routes';
 import LayoutRoute from "../../commons/Layout/LayoutRoute";
 import "../../App.css";
 import LayoutLoginRoutes from "../../commons/Layout/LayoutLoginRoutes";
+import Footer from "../Footer";
 
 const store = configureStore();
 
@@ -63,6 +64,7 @@ class App extends Component {
             </Switch>
           </ThemeProvider>
         </BrowserRouter>
+        <Footer />
       </Provider>
     );
   }

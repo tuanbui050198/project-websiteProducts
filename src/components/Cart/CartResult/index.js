@@ -37,7 +37,7 @@ class CartResult extends Component {
     var total = 0;
     if (cart.length > 0) {
       cart.map((index) => {
-        total += index.price * index.quantity;
+        return total += index.price * index.quantity;
       })
     }
     return total;

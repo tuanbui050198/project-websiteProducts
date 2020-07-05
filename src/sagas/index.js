@@ -54,24 +54,16 @@ function* watchFetchListProduct() {
 function* filterProductSaga({ payload }) {
   yield delay(200);
   const { keyword } = payload;
-  const list = yield select((state) => state.task.listProducts);
+  const resp = yield call(getList); 
+  const list = resp.data;
   const filterProduct = list.filter((product) =>
     product.name.trim().toLowerCase().includes(keyword.trim().toLowerCase())
   );
   yield put(filterProductSuccess(filterProduct));
 }
 
-var findProductInCart = (cart, product) => {
-  var index = -1;
-  if (cart.length > 0) {
-    for (var i = 0; i < cart.length; i++) {
-      if (cart[i].name === product.name) {
-        index = i;
-        break;
-      }
-    }
-  }
-  return index;
+const findProductInCart = (cart = [], product) => {
+  return cart.findIndex((ca) => ca.name === product.name);
 };
 
 function* addToCartSaga({ payload }) {
@@ -86,20 +78,16 @@ function* addToCartSaga({ payload }) {
     type,
     price,
   } = payload.product;
-
   const respGetData = yield call(getListCart);
   const dataCart = respGetData.data;
-  var index = -1;
-  index = findProductInCart(dataCart, payload.product);
-
+  var index = findProductInCart(dataCart, payload.product);
   if (index !== -1) {
     var temp2 = parseInt(quantity) + parseInt(dataCart[index].quantity);
     temp2= temp2.toString();
     dataCart[index].quantity = temp2; 
     const respDataCart = yield call(updateCart, dataCart[index], dataCart[index].id);
-    console.log(respDataCart.status);
     if(respDataCart.status === STATUS_CODE.SUCCESS) {
-      yield put(updateQuantitySuccess(respDataCart.data, dataCart[index].quantity));
+      yield put(updateQuantitySuccess(respDataCart.data));
     } else {
       yield put(updateQuantityFailed(respDataCart.data));
     }
@@ -174,6 +162,7 @@ function* deleteProductInCartSaga({payload}) {
 }
 
 function* updateSumQuantityInCartSaga({payload}) {
+  
   const { product } = payload;
   const respGetData = yield call(getListCart);
   const dataCart = respGetData.data;
@@ -189,6 +178,7 @@ function* updateSumQuantityInCartSaga({payload}) {
     dataCart[index],
     dataCart[index].id
   );
+  
   const { data, status: statusCode } = resp;
   if (statusCode === STATUS_CODE.SUCCESS) {
     yield put(updateSumQuantityInCartSuccess(data));

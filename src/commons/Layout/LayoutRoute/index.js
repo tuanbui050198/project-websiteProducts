@@ -4,7 +4,6 @@ import styles from "./styles";
 import { Route } from "react-router-dom";
 import Dashboard from "../../../components/Dashboard";
 import PropTypes from "prop-types";
-import Footer from "../../../containers/Footer";
 
 class LayoutRoute extends Component {
   render() {
@@ -18,7 +17,6 @@ class LayoutRoute extends Component {
               <Dashboard {...remainProps}>
                 <MyComponent {...routeProps} />
               </Dashboard>
-              <Footer />
             </div>
           );
         }}

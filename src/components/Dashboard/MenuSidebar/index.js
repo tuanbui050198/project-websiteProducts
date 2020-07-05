@@ -52,6 +52,7 @@ class MenuSidebar extends Component {
         classes={{
           paper: classes.drawerPaper,
         }}
+        className = "responsive-drawer-paper"
         variant="persistent"
       >
         {this.renderListMenu()}

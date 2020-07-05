@@ -4,21 +4,7 @@ import { toast } from "react-toastify";
 import * as Message from "../constants/Message";
 
 const initialState = {
-  listProductCart: [],
   listCart: [],
-};
-
-var findProductInCart = (cart, product) => {
-  var index = -1;
-  if (cart.length > 0) {
-    for (var i = 0; i < cart.length; i++) {
-      if (cart[i].name === product.name) {
-        index = i;
-        break;
-      }
-    }
-  }
-  return index;
 };
 
 const cart = (state = initialState, action) => {
@@ -29,12 +15,12 @@ const cart = (state = initialState, action) => {
       };
     }
     case types.ADD_TO_CART_SUCCESS: {
-      const { data } = action.payload;
+      const {listCart} = action.payload;
       toast.success(Message.MSG_ADD_TO_CART_SUCCESS);
       return {
         ...state,
-        listProductCart : data,
-      };
+        listCart: listCart,
+      }
     }
     case types.ADD_TO_CART_FAILED: {
       const { error } = action.payload;
@@ -71,29 +57,10 @@ const cart = (state = initialState, action) => {
     }
     case types.UPDATE_QUANTITY_SUCCESS: {
       toast.success(Message.MSG_ADD_TO_CART_SUCCESS);
-      const { data } = action.payload;
-      const { listCart } = state;
-      var index = -1;
-      index = findProductInCart(listCart, data);
-      const quantityCartIndex = listCart[index].quantity;
-      var sumQuantity = parseInt(quantityCartIndex) + 1;
-      sumQuantity = sumQuantity.toString();
-      listCart[index].quantity = sumQuantity;
+      const {listCart} = action.payload;
       return {
         ...state,
-      };
-    }
-    case types.UPDATE_QUANTITY_IN_CART_SUCCESS: {
-      const { data } = action.payload;
-      const { listCart } = state;
-      var index = -1;
-      index = findProductInCart(listCart, data);
-      const quantityCartIndex = listCart[index].quantity;
-      var sumQuantity = parseInt(quantityCartIndex) + 1;
-      sumQuantity = sumQuantity.toString();
-      listCart[index].quantity = sumQuantity;
-      return {
-        ...state,
+        listCart: listCart,
       };
     }
     case types.UPDATE_SUM_QUANTITY_IN_CART: {
@@ -107,36 +74,19 @@ const cart = (state = initialState, action) => {
       };
     }
     case types.UPDATE_SUM_QUANTITY_IN_CART_SUCCESS: {
-      const { data } = action.payload;
-      const { listCart } = state;
-      var index = -1;
-      index = findProductInCart(listCart, data);
-      const quantityCartIndex = listCart[index].quantity;
-      var sumQuantity = parseInt(quantityCartIndex) + 1;
-      sumQuantity = sumQuantity.toString();
-      listCart[index].quantity = sumQuantity;
-
-      const newList = [...listCart];
       toast.success(Message.MSG_UPDATE_CART_SUCCESS);
+      const {listCart} = action.payload;
       return {
         ...state,
-        listCart: newList,
+        listCart: listCart,
       };
     }
     case types.UPDATE_SUBTRACTION_QUANTITY_IN_CART_SUCCESS: {
-      const { data } = action.payload;
-      const { listCart } = state;
-      var index = -1;
-      index = findProductInCart(listCart, data);
-      const quantityCartIndex = listCart[index].quantity;
-      var subQuantity = parseInt(quantityCartIndex) - 1;
-      subQuantity = subQuantity.toString();
-      listCart[index].quantity = subQuantity;
-      const newList = [...listCart];
       toast.success(Message.MSG_UPDATE_CART_SUCCESS);
+      const {listCart} = action.payload;
       return {
         ...state,
-        listCart: newList,
+        listCart: listCart,
       };
     }
     case types.UPDATE_QUANTITY_FAILED: {

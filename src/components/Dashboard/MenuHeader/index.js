@@ -1,4 +1,4 @@
-import { withStyles, Button } from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Badge from "@material-ui/core/Badge";
 import IconButton from "@material-ui/core/IconButton";
@@ -19,6 +19,9 @@ import { ROUTES_PRODUCT } from "../../../constants/Routes";
 import styles from "./styles";
 import * as text from "../../../constants/text";
 import { withRouter } from "react-router-dom";
+import { bindActionCreators, compose } from "redux";
+import * as taskActions from '../../../actions/task';
+import {connect} from 'react-redux';
 
 const menuId = "primary-search-account-menu";
 
@@ -30,7 +33,6 @@ class MenuHeader extends Component {
     this.state = {
       mobileMoreAnchorEl: null,
       anchorEl: null,
-      txtSearch: "",
     };
   }
 
@@ -119,16 +121,15 @@ class MenuHeader extends Component {
     }
   };
 
-  onhandleChange = (e) => {
-    var value = e.target.value;
-    this.setState({
-      txtSearch: value,
-    });
-  };
+  handeFilter = e => {
+    const {value} = e.target;
+    const {taskActionCreators} = this.props;
+    const {filterProduct} = taskActionCreators;
+    filterProduct(value);
+  }
 
   render() {
     const { classes, name } = this.props;
-    const { txtSearch } = this.state;
     return (
       <div className={classes.grow}>
         <AppBar position="static">
@@ -151,13 +152,12 @@ class MenuHeader extends Component {
               </div>
               <InputBase
                 placeholder="Search…"
+                onChange={this.handeFilter}
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
                 }}
                 inputProps={{ "aria-label": "search" }}
-                value={txtSearch}
-                onChange={this.onhandleChange}
               />
             </div>
             <div className={classes.grow} />
@@ -212,4 +212,19 @@ MenuHeader.propTypes = {
   history: PropTypes.object,
 };
 
-export default withStyles(styles)(withRouter(MenuHeader));
+const mapStateToProps = null;
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+    taskActionCreators: bindActionCreators(taskActions, dispatch),
+  }
+};
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+export default compose(
+  withConnect,
+  withStyles(styles),
+  withRouter,
+)(MenuHeader);
+// export default withStyles(styles)(withRouter(MenuHeader));
