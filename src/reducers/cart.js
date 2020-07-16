@@ -1,5 +1,4 @@
 import * as types from "../constants/ActionType";
-import { toastError } from "../helpers/toastHelper";
 import { toast } from "react-toastify";
 import * as Message from "../constants/Message";
 
@@ -15,16 +14,16 @@ const cart = (state = initialState, action) => {
       };
     }
     case types.ADD_TO_CART_SUCCESS: {
-      const {listCart} = action.payload;
+      const { listCart } = action.payload;
       toast.success(Message.MSG_ADD_TO_CART_SUCCESS);
       return {
         ...state,
         listCart: listCart,
-      }
+      };
     }
     case types.ADD_TO_CART_FAILED: {
       const { error } = action.payload;
-      toastError(error);
+      toast.error(error);
       return {
         ...state,
       };
@@ -44,7 +43,7 @@ const cart = (state = initialState, action) => {
     }
     case types.FETCH_PRODUCT_CART_FAILED: {
       const { error } = action.payload;
-      toastError(error);
+      toast.error(error);
       return {
         ...state,
         listCart: [],
@@ -57,7 +56,7 @@ const cart = (state = initialState, action) => {
     }
     case types.UPDATE_QUANTITY_SUCCESS: {
       toast.success(Message.MSG_ADD_TO_CART_SUCCESS);
-      const {listCart} = action.payload;
+      const { listCart } = action.payload;
       return {
         ...state,
         listCart: listCart,
@@ -75,7 +74,7 @@ const cart = (state = initialState, action) => {
     }
     case types.UPDATE_SUM_QUANTITY_IN_CART_SUCCESS: {
       toast.success(Message.MSG_UPDATE_CART_SUCCESS);
-      const {listCart} = action.payload;
+      const { listCart } = action.payload;
       return {
         ...state,
         listCart: listCart,
@@ -83,7 +82,7 @@ const cart = (state = initialState, action) => {
     }
     case types.UPDATE_SUBTRACTION_QUANTITY_IN_CART_SUCCESS: {
       toast.success(Message.MSG_UPDATE_CART_SUCCESS);
-      const {listCart} = action.payload;
+      const { listCart } = action.payload;
       return {
         ...state,
         listCart: listCart,
@@ -91,7 +90,7 @@ const cart = (state = initialState, action) => {
     }
     case types.UPDATE_QUANTITY_FAILED: {
       const { error } = action.payload;
-      toastError(error);
+      toast.error(error);
       return {
         ...state,
       };
@@ -111,7 +110,26 @@ const cart = (state = initialState, action) => {
     }
     case types.DELETE_PRODUCT_IN_CART_FAILED: {
       const { error } = action.payload;
-      toastError(error);
+      toast.error(error);
+      return {
+        ...state,
+      };
+    }
+    case types.PAYMENT_PRODUCT: {
+      return {
+        ...state,
+      };
+    }
+    case types.PAYMENT_PRODUCT_SUCCESS: {
+      toast.success(Message.MSG_PAYMENT_SUCCESS_CHECK_MAIL);
+      return {
+        ...state,
+        listCart: [],
+      };
+    }
+    case types.PAYMENT_PRODUCT_FAILED: {
+      const { error } = action.payload;
+      toast.error(error);
       return {
         ...state,
       };
