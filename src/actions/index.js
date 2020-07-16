@@ -184,3 +184,24 @@ export const deleteProductInCartFailed = (error) => {
     },
   };
 };
+
+export const paymentProduct = () => {
+  return {
+    type: types.PAYMENT_PRODUCT,
+  };
+};
+
+export const paymentProductSuccess = () => {
+  return {
+    type: types.PAYMENT_PRODUCT_SUCCESS,
+  };
+};
+
+export const paymentProductFailed = (error) => {
+  return {
+    type: types.PAYMENT_PRODUCT_FAILED,
+    payload: {
+      error,
+    },
+  };
+};
